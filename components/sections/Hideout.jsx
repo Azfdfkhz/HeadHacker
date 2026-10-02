@@ -10,7 +10,14 @@ import SceneImage from "@/components/ui/SceneImage";
 export default function Hideout() {
   const router = useRouter();
   const [ready, setReady] = useState(false); // interactive mode aktif setelah kamera "berhenti"
-  useEffect(() => { const t = setTimeout(() => setReady(true), 1600); return () => clearTimeout(t); }, []);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setReady(true);
+      return;
+    }
+    const t = setTimeout(() => setReady(true), 1600);
+    return () => clearTimeout(t);
+  }, []);
   const open = (item) => router.push(`/archive/${item.id}`);
 
   return (

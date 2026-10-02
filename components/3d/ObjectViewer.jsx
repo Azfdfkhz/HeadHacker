@@ -2,7 +2,7 @@
 import { Component, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Box3, Vector3 } from "three";
 import { Canvas } from "@react-three/fiber";
-import { Center, Environment, Lightformer, OrbitControls, useGLTF } from "@react-three/drei";
+import { Center, ContactShadows, Environment, Lightformer, OrbitControls, useGLTF } from "@react-three/drei";
 import { materialOverrides } from "./textures";
 import { proceduralModels } from "./models";
 
@@ -11,9 +11,12 @@ function GLBModel({ url, id }) {
   const { scene } = useGLTF(url);
   useEffect(() => {
     const overrides = materialOverrides[id];
-    if (!overrides) return;
     scene.traverse((o) => {
-      if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => overrides[m.name]?.(m));
+      if (!o.isMesh) return;
+      o.castShadow = true;
+      o.receiveShadow = true;
+      if (!overrides) return;
+      (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => overrides[m.name]?.(m));
     });
   }, [scene, id]);
   const scale = useMemo(() => {
@@ -47,16 +50,22 @@ export default function ObjectViewer({ item }) {
   const fallback = Procedural ? <Procedural /> : <Placeholder dims={item.dims} />;
   return (
     <div className="relative h-full w-full cursor-grab active:cursor-grabbing">
-      <Canvas camera={{ position: [3, 2, 4], fov: 35 }} dpr={[1, 1.75]}>
+      <Canvas
+        camera={{ position: [3.2, 2.2, 4.6], fov: 34, near: 0.1, far: 100 }}
+        dpr={[1, 1.5]}
+        shadows
+        gl={{ antialias: true, powerPreference: "high-performance", toneMappingExposure: 1.05 }}
+      >
         <ambientLight intensity={0.7} />
-        <directionalLight position={[4, 6, 3]} intensity={1.6} />
+        <directionalLight position={[4, 6, 3]} intensity={1.6} castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0002} />
         <directionalLight position={[-4, 2, -3]} intensity={0.5} color="#91AAA5" />
+        <ContactShadows position={[0, -1.05, 0]} opacity={0.32} scale={5} blur={2.5} far={3} resolution={256} />
         <Environment resolution={256}>
           <Lightformer intensity={2} position={[0, 5, -5]} scale={[10, 5, 1]} />
           <Lightformer intensity={1.2} position={[-5, 1, 3]} rotation-y={Math.PI / 2} scale={[8, 3, 1]} />
           <Lightformer intensity={1} position={[5, 2, 3]} rotation-y={-Math.PI / 2} scale={[8, 3, 1]} />
         </Environment>
-        <Suspense fallback={null}>
+        <Suspense fallback={<Placeholder dims={item.dims} />}>
           <Center>
             {item.hasModel ? (
               <ModelBoundary fallback={fallback}>
@@ -76,3 +85,6 @@ export default function ObjectViewer({ item }) {
     </div>
   );
 }
+
+
+["/models/laptop.glb", "/models/flashdisk.glb", "/models/computer.glb", "/models/handheld-hack.glb", "/models/radio.glb", "/models/backpack.glb"].forEach(useGLTF.preload);

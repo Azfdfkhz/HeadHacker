@@ -2,12 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { background: #101416; color: #E7E8E3; }
-body { font-family: var(--font-sans), system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+:root { color-scheme: dark; }
+html { background:#101416; color:#E7E8E3; scroll-behavior:smooth; }
+body { margin:0; background:#101416; color:#E7E8E3; font-family:var(--font-sans),system-ui,sans-serif; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+button,a { -webkit-tap-highlight-color:transparent; }
+button:focus-visible,a:focus-visible { outline:1px solid #91AAA5; outline-offset:3px; }
+::selection { background:rgba(145,170,165,.3); color:#E7E8E3; }
 
-@keyframes drift { from { transform: scale(1.03); } to { transform: scale(1.09); } }
-@keyframes doorlight { from { opacity: 0; transform: translate(-50%,-50%) scale(0.2); } to { opacity: 1; transform: translate(-50%,-50%) scale(7); } }
-@keyframes settle { from { opacity: 0; transform: scale(1.12); } to { opacity: 1; transform: scale(1); } }
-@keyframes progress { from { width: 0; } to { width: 100%; } }
-.animate-drift { animation: drift 18s ease-in-out infinite alternate; }
-.animate-settle { animation: settle 1.8s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes drift { from{transform:scale(1.03)} to{transform:scale(1.09)} }
+@keyframes doorlight { from{opacity:0;transform:translate(-50%,-50%) scale(.2)} to{opacity:1;transform:translate(-50%,-50%) scale(7)} }
+@keyframes settle { from{opacity:0;transform:scale(1.12)} to{opacity:1;transform:scale(1)} }
+@keyframes progress { from{width:0} to{width:100%} }
+@keyframes fadein { from{opacity:0} to{opacity:1} }
+.animate-drift{animation:drift 18s ease-in-out infinite alternate}
+.animate-settle{animation:settle 1.8s cubic-bezier(.2,.7,.2,1) both}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .animate-drift,.animate-settle,.animate-ping{animation:none!important}
+  *{transition-duration:.01ms!important}
+}

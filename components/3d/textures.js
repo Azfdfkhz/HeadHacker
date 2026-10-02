@@ -41,10 +41,17 @@ export const keyboard = () =>
 // Pemetaan nama material di Laptop.glb -> tekstur. Sesuaikan di sini kalau ada bagian yang salah.
 export const materialOverrides = {
   laptop: {
-    "Material.002": (m) => paint(m, { map: brushedMetal("#8d969a"), metalness: 0.65, roughness: 0.38 }), // bodi
-    "Material.003": (m) => paint(m, { map: brushedMetal("#7f888c"), metalness: 0.65, roughness: 0.4 }), // lid
-    "Material.010": (m) => paint(m, { map: keyboard(), metalness: 0, roughness: 0.7 }), // area keyboard
-    "Material.004": (m) => paint(m, { color: "#6c767a", metalness: 0.3, roughness: 0.25 }), // trackpad
+    // Asset laptop baru memakai material PBR langsung di GLB.
+    // Override hanya memberi finishing ringan agar konsisten dengan tema HEADHACKER.
+    Laptop_Anodized_Aluminum: (m) => paint(m, { color: "#242a2f", metalness: 0.82, roughness: 0.28 }),
+    Laptop_Edges: (m) => paint(m, { color: "#353c42", metalness: 0.78, roughness: 0.24 }),
+    Keyboard_Black: (m) => paint(m, { color: "#111519", metalness: 0.25, roughness: 0.52 }),
+    Keycaps: (m) => paint(m, { color: "#171d21", metalness: 0.18, roughness: 0.58 }),
+    Trackpad: (m) => paint(m, { color: "#242c32", metalness: 0.55, roughness: 0.32 }),
+    Hinge: (m) => paint(m, { color: "#0e1215", metalness: 0.8, roughness: 0.24 }),
+    Screen_Bezel: (m) => paint(m, { color: "#05080b", metalness: 0.2, roughness: 0.3 }),
+    // Jangan mengganti map layar: texture cyber UI tertanam di GLB.
+    Screen_Cyber_UI: (m) => { m.metalness = 0.02; m.roughness = 0.18; m.emissive.set("#14364b"); m.emissiveIntensity = 0.65; m.needsUpdate = true; },
   },
 };
 

@@ -17,7 +17,16 @@ export default function Hero() {
   useEffect(() => { router.prefetch("/explore"); return () => clearTimeout(timer.current); }, [router]);
 
   const go = () => router.push("/explore");
-  const enter = () => { setEntering(true); timer.current = setTimeout(go, ENTER_MS); };
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) setEntering(false);
+  }, []);
+  const enter = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return go();
+    if (entering) return;
+    setEntering(true);
+    timer.current = setTimeout(go, ENTER_MS);
+  };
   const skip = () => { clearTimeout(timer.current); go(); };
 
   // Parallax halus mengikuti mouse (hanya saat idle)
@@ -29,13 +38,13 @@ export default function Hero() {
   };
 
   return (
-    <section onMouseMove={onMove} className="relative h-screen min-h-[560px] overflow-hidden bg-gradient-to-b from-[#1b2540] via-[#2b3350] to-[#101416]">
+    <section aria-label="HEADHACKER landing page" onMouseMove={onMove} className="relative h-screen min-h-[560px] overflow-hidden bg-gradient-to-b from-[#1b2540] via-[#2b3350] to-[#101416]">
       <div ref={layer} className="absolute -inset-4 animate-drift transition-[translate] duration-700 ease-out">
         <div
           className="h-full w-full transition-transform ease-in-out"
           style={{ transform: entering ? "scale(2.6)" : "scale(1)", transformOrigin: DOOR, transitionDuration: "5.5s" }}
         >
-          <SceneImage src="/images/exterior.jpg" alt="Hideout" className="h-full w-full object-cover" />
+          <SceneImage src="/images/exterior.jpg" alt="Hideout" className="h-full w-full object-cover" loading="eager" decoding="sync" />
         </div>
       </div>
       <div className="absolute inset-0 bg-gradient-to-r from-bg/40 via-transparent to-transparent" />
@@ -58,7 +67,7 @@ export default function Hero() {
           <div className="absolute inset-x-0 bottom-0 z-30 h-px bg-line">
             <div className="h-full bg-accent" style={{ animation: `progress ${ENTER_MS}ms linear forwards` }} />
           </div>
-          <button onClick={skip} className="absolute bottom-8 right-8 z-30 text-xs tracking-widest text-mute hover:text-ink">SKIP →</button>
+          <button type="button" onClick={skip} className="absolute bottom-8 right-8 z-30 text-xs tracking-widest text-mute hover:text-ink">SKIP →</button>
         </>
       )}
     </section>

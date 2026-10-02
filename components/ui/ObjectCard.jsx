@@ -8,9 +8,9 @@ export default function ObjectCard({ item, index }) {
       href={`/archive/${item.id}`}
       className="group flex flex-col border border-line bg-surface p-3 transition hover:border-accent"
     >
-      <div className="relative flex aspect-[4/3] items-center justify-center bg-surface2">
+      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-surface2">
         <span className="absolute font-mono text-3xl text-white/10">{String(index + 1).padStart(2, "0")}</span>
-        <SceneImage src={`/images/thumbs/${item.id}.png`} alt={item.name} className="relative h-full w-full object-contain p-3 mix-blend-lighten" />
+        <SceneImage src={`/images/thumbs/${item.id}.png`} alt={item.name} className="relative h-full w-full object-contain p-3 mix-blend-lighten transition duration-500 group-hover:scale-105" />
       </div>
       <div className="mt-3 flex items-baseline justify-between text-sm">
         <span>{item.name}</span>
