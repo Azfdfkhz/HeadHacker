@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const links = [["Home", "/"], ["Archive", "/archive"], ["About", "/about"]];
+const links = [["Home", "/"], ["Archive", "/archive"], ["Journal", "/journal"], ["About", "/about"]];
 
 export default function Navbar() {
   const path = usePathname();
@@ -15,9 +15,9 @@ export default function Navbar() {
         <span className="text-lg italic">//</span> HEADHACKER
       </Link>
       {showLinks && (
-        <nav className="flex gap-6 text-xs">
+        <nav className="flex gap-2 text-sm">
           {links.map(([label, href]) => (
-            <Link key={href} href={href} className={`transition hover:text-accent ${path === href ? "text-accent" : ""}`}>{label}</Link>
+            <Link key={href} href={href} className={`px-3 py-2 transition hover:text-accent ${path === href ? "text-accent" : ""}`}>{label}</Link>
           ))}
         </nav>
       )}

@@ -12,12 +12,12 @@ export default function ObjectCard({ item, index }) {
         <span className="absolute font-mono text-3xl text-white/10">{String(index + 1).padStart(2, "0")}</span>
         <SceneImage src={`/images/thumbs/${item.id}.png`} alt={item.name} className="relative h-full w-full object-contain p-3 mix-blend-lighten transition duration-500 group-hover:scale-105" />
       </div>
-      <div className="mt-3 flex items-baseline justify-between text-sm">
+      <div className="mt-3 flex items-baseline justify-between text-base">
         <span>{item.name}</span>
         <span className="font-mono text-xs text-mute">{String(index + 1).padStart(2, "0")}</span>
       </div>
-      <p className="mt-1 text-[11px] uppercase tracking-widest text-mute">{item.category}</p>
-      <p className="mt-2 line-clamp-2 text-xs text-mute">{item.description}</p>
+      <p className="mt-1 text-xs uppercase tracking-widest text-mute">{item.category}</p>
+      <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-mute">{item.description}</p>
     </Link>
   );
 }

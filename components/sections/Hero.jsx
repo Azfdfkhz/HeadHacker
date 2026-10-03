@@ -47,13 +47,13 @@ export default function Hero() {
           <SceneImage src="/images/exterior.jpg" alt="Hideout" className="h-full w-full object-cover" loading="eager" decoding="sync" />
         </div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-r from-bg/40 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-bg/75 via-bg/25 to-transparent" />
 
       <div className={`relative z-10 flex h-full flex-col justify-center px-6 transition-all duration-700 sm:px-12 ${entering ? "-translate-x-6 opacity-0" : "opacity-100"}`}>
-        <p className="font-mono text-[11px] tracking-widest text-ink/80">// A VR SURVEILLANCE EXPERIENCE</p>
+        <p className="font-mono text-xs tracking-[0.2em] text-ink sm:text-sm">// A VR SURVEILLANCE EXPERIENCE</p>
         <h1 className="mt-4 font-mono text-5xl tracking-[0.2em] sm:text-6xl">HEADHACKER</h1>
-        <p className="mt-5 text-sm leading-relaxed">Not just a game.<br />It&apos;s a place, a system, a story.</p>
-        <div className="mt-8"><Button onClick={enter} className="w-56 justify-between" >ENTER <span>→</span></Button></div>
+        <p className="mt-5 text-base leading-relaxed text-ink/90">Not just a game.<br />It&apos;s a place, a system, a story.</p>
+        <div className="mt-8"><Button primary onClick={enter} className="w-56 justify-between">ENTER <span>→</span></Button></div>
       </div>
 
       {entering && (
@@ -67,7 +67,7 @@ export default function Hero() {
           <div className="absolute inset-x-0 bottom-0 z-30 h-px bg-line">
             <div className="h-full bg-accent" style={{ animation: `progress ${ENTER_MS}ms linear forwards` }} />
           </div>
-          <button type="button" onClick={skip} className="absolute bottom-8 right-8 z-30 text-xs tracking-widest text-mute hover:text-ink">SKIP →</button>
+          <button type="button" onClick={skip} className="absolute bottom-8 right-8 z-30 px-3 py-2 text-sm tracking-widest text-ink/80 hover:text-ink">SKIP →</button>
         </>
       )}
     </section>

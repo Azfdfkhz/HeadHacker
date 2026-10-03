@@ -1,6 +1,6 @@
 export const rooms = [
-  { id: "main", name: "Ruang Utama", active: true },
-  { id: "bedroom", name: "Kamar", active: false },
-  { id: "bathroom", name: "Kamar Mandi", active: false },
-  { id: "kitchen", name: "Dapur", active: false },
+  { id: "main", name: "Main Room", active: true },
+  { id: "bedroom", name: "Bedroom", active: false },
+  { id: "bathroom", name: "Bathroom", active: false },
+  { id: "kitchen", name: "Kitchen", active: false },
 ];
