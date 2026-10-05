@@ -92,5 +92,5 @@ function Backpack() {
 
 export const proceduralModels = {
   flashdisk: Flashdisk, laptop: Laptop, computer: Computer,
-  "handheld-hack": Handheld, radio: Radio, backpack: Backpack,
+  backpack: Backpack,
 };

@@ -45,3 +45,5 @@ button:focus-visible,a:focus-visible { outline:1px solid #91AAA5; outline-offset
 .arrow { display: grid; width: 3cqw; height: 3cqw; place-items: center; border-radius: 9999px; background: #1a1a1a; color: #e6e3d8; font-size: 1.6cqw; transition: transform .2s, opacity .2s; }
 .arrow:hover:not(:disabled) { transform: scale(1.12); }
 .arrow:disabled { opacity: .25; cursor: default; }
+
+.cover-front { padding: 0; color: #e6e3d8; border-radius: 0 .9rem .9rem 0; background-color: #151311; background-image: var(--grain), radial-gradient(120% 80% at 30% 10%, rgba(255,255,255,.1), transparent 60%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), inset 8px 0 14px rgba(0,0,0,.45); }

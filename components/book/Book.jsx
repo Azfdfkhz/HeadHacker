@@ -37,14 +37,21 @@ export default function Book() {
     return () => { window.removeEventListener("keydown", onKey); t.forEach(clearTimeout); };
   }, [step]);
 
-  const active = f < 1 ? -1 : f === 1 ? 0 : f === 2 ? 1 : 2;
+  // buku terbuka sendiri saat halaman dimuat
+  useEffect(() => {
+    const t = setTimeout(() => { if (fRef.current === 0) step(1); }, 900);
+    return () => clearTimeout(t);
+  }, [step]);
+
+  let active = -1;
+  tabs.forEach(([, s], i) => { if (f >= s) active = i; });
 
   return (
     <div className="overflow-x-auto px-24 py-4">
-      <div className="relative mx-auto w-[min(calc(94vw-12rem),calc((100vh-9rem)*1.5))] min-w-[640px]" style={{ aspectRatio: "3 / 2", containerType: "inline-size" }}>
-        <div className="leather absolute inset-0 rounded-xl" />
+      <div className="relative mx-auto w-[min(calc(94vw-12rem),calc((100vh-9rem)*1.5))] min-w-[640px]" style={{ aspectRatio: "3 / 2", containerType: "inline-size", transform: f === 0 ? "translateX(-25%)" : "none", transition: "transform .9s cubic-bezier(.45,.05,.25,1)" }}>
+        <div className="leather absolute inset-0 rounded-xl" style={{ clipPath: f === 0 ? "inset(0 0 0 50% round 12px)" : "inset(0 0 0 0 round 12px)", transition: "clip-path .9s cubic-bezier(.45,.05,.25,1)" }} />
 
-        <nav aria-label="Journal sections" className="absolute right-full top-[12%] z-[80] flex flex-col gap-2">
+        <nav aria-label="Journal sections" className={`absolute right-full top-[12%] z-[80] flex flex-col gap-2 transition-opacity duration-500 ${f === 0 ? "pointer-events-none opacity-0" : "opacity-100"}`}>
           {tabs.map(([label, spread], i) => (
             <button key={label} onClick={() => goTo(spread)} aria-current={active === i}
               className={`paper-tab font-type text-sm uppercase tracking-wider transition-transform ${active === i ? "translate-x-3 bg-[#161616] text-[#e6e3d8]" : "translate-x-4 hover:translate-x-2"}`}>
@@ -53,21 +60,21 @@ export default function Book() {
           ))}
         </nav>
 
-        <div className="absolute inset-x-[1.5%] inset-y-[2.5%]" style={{ perspective: "2600px" }}>
-          <div className="paper page-l absolute inset-y-0 left-0 w-1/2" />
+        <div className="absolute inset-x-[1.5%] inset-y-[2.5%]" style={{ perspective: "2600px", cursor: f === 0 ? "pointer" : "auto" }} onClick={() => { if (fRef.current === 0) step(1); }}>
+          <div className="paper page-l absolute inset-y-0 left-0 w-1/2 transition-opacity duration-500" style={{ opacity: f === 0 ? 0 : 1 }} />
           <div className="paper page-r absolute inset-y-0 right-0 w-1/2" />
           {Array.from({ length: leaves }, (_, k) => {
             const flipped = k < f;
             return (
               <div key={k} className="leaf absolute inset-y-0 right-0 w-1/2"
                 style={{ zIndex: (moving[k] ? 50 : flipped ? k : leaves - k) + 1, transform: flipped ? "rotateY(-180deg)" : "none" }}>
-                <div className="face paper page-r">{pages[2 * k]}</div>
+                <div className={`face ${k === 0 ? "cover-front" : "paper page-r"}`}>{pages[2 * k]}</div>
                 <div className="face back paper page-l">{pages[2 * k + 1]}</div>
               </div>
             );
           })}
-          <div className="spine pointer-events-none absolute inset-y-0 left-1/2 z-[60] w-[3%] -translate-x-1/2" />
-          <button onClick={() => step(-1)} disabled={f === 0} aria-label="Previous page" className="arrow absolute bottom-[3%] left-[3%] z-[70]">←</button>
+          <div className="spine pointer-events-none absolute inset-y-0 left-1/2 z-[60] w-[3%] -translate-x-1/2 transition-opacity duration-500" style={{ opacity: f === 0 ? 0 : 1 }} />
+          <button onClick={() => step(-1)} disabled={f === 0} aria-label="Previous page" style={{ visibility: f === 0 ? "hidden" : "visible" }} className="arrow absolute bottom-[3%] left-[3%] z-[70]">←</button>
           <button onClick={() => step(1)} disabled={f === leaves} aria-label="Next page" className="arrow absolute bottom-[3%] right-[3%] z-[70]">→</button>
         </div>
       </div>

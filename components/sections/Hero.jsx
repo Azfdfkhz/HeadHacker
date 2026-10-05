@@ -5,7 +5,7 @@ import Button from "@/components/ui/Button";
 import SceneImage from "@/components/ui/SceneImage";
 
 const ENTER_MS = 6500; // PRD: 5-10 detik
-const DOOR = "69% 80%"; // posisi pintu di exterior.jpg
+const DOOR = "69% 80%"; // posisi pintu masuk apartemen di exterior.svg
 
 // Timeline (detik): 0 UI memudar -> 0-5.5 kamera maju ke pintu -> 3 cahaya pintu menyala -> 4.6 fade gelap -> 6.5 pindah ke /explore
 export default function Hero() {
@@ -44,7 +44,7 @@ export default function Hero() {
           className="h-full w-full transition-transform ease-in-out"
           style={{ transform: entering ? "scale(2.6)" : "scale(1)", transformOrigin: DOOR, transitionDuration: "5.5s" }}
         >
-          <SceneImage src="/images/exterior.jpg" alt="Hideout" className="h-full w-full object-cover" loading="eager" decoding="sync" />
+          <SceneImage src="/images/exterior.png" alt="Hideout" className="h-full w-full object-cover" loading="eager" decoding="sync" />
         </div>
       </div>
       <div className="absolute inset-0 bg-gradient-to-r from-bg/75 via-bg/25 to-transparent" />

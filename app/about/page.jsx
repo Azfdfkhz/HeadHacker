@@ -17,6 +17,9 @@ export default function About() {
         <p>This site introduces the world through exploration instead of long text. You start outside the hideout, step in, and learn what happens there through the equipment on the desk.</p>
         <p className="font-mono text-sm tracking-widest text-accent">ENTER → EXPLORE → INSPECT</p>
       </Section>
+      <Section label="Why a CCTV head?">
+        <p>In the city, almost every street, office and building is watched by CCTV. Before HEADHACKER can act, he has to hack those cameras first: the city&apos;s, an office&apos;s, or anything else that watches. That is why he is drawn with the head of the very camera he has to take over.</p>
+      </Section>
       <Section label="How to explore">
         <p>Hover the glowing points in the Main Room to read about each object, then inspect it in 3D: drag to rotate, scroll to zoom. The Journal collects everything in one notebook you can flip through.</p>
       </Section>
