@@ -44,7 +44,7 @@ export default function Hero() {
           className="h-full w-full transition-transform ease-in-out"
           style={{ transform: entering ? "scale(2.6)" : "scale(1)", transformOrigin: DOOR, transitionDuration: "5.5s" }}
         >
-          <SceneImage src="/images/exterior.png" alt="Hideout" className="h-full w-full object-cover" loading="eager" decoding="sync" />
+          <SceneImage src="/images/exterior.jpg" alt="Hideout exterior" className="h-full w-full object-cover" loading="eager" decoding="sync" />
         </div>
       </div>
       <div className="absolute inset-0 bg-gradient-to-r from-bg/75 via-bg/25 to-transparent" />
